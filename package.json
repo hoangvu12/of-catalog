@@ -1,0 +1,21 @@
+{
+  "name": "of-catalog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun run src/build.ts",
+    "build:quick": "bun run src/build.ts -- --skip-steam-details",
+    "scrape": "bun run src/build.ts -- --scrape-only",
+    "validate": "bun run src/validate.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/iconv-lite": "^0.0.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.7.3"
+  }
+}

@@ -1,0 +1,49 @@
+name: Update catalog
+
+on:
+  schedule:
+    # Weekly Monday 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: of-catalog-update
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install
+        run: bun install
+
+      - name: Build catalog
+        run: bun run build
+
+      - name: Validate
+        run: |
+          bun run typecheck
+          bun run validate
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/catalog.json data/browse.json data/unmapped.json data/appid-index.json data/overrides.json
+          if git diff --staged --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          STATS=$(node -e "const c=require('./data/catalog.json'); console.log(c.stats.total+' games, '+c.stats.mapped+' mapped')")
+          git commit -m "chore: update catalog ($STATS)"
+          git push
