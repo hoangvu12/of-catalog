@@ -1,4 +1,5 @@
 name: Update catalog
+run-name: Update Online-Fix catalog
 
 on:
   schedule:
