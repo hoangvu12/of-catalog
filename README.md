@@ -1,5 +1,7 @@
 # of-catalog
 
+[![Update catalog](https://github.com/hoangvu12/of-catalog/actions/workflows/update.yml/badge.svg)](https://github.com/hoangvu12/of-catalog/actions/workflows/update.yml)
+
 Weekly (and on-demand) scrape of [Online-Fix](https://online-fix.me/games/) listings, mapped to Steam AppIDs + normalized Steam store data.
 
 Consumed by the Ina launcher Online-Fix browse/detail UI so clients don’t need live Steam search on every grid load.
